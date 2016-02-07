@@ -4,6 +4,7 @@ import Secrets from './secrets';
 import YouTubeSearch from 'youtube-api-search';
 import SearchBar from './components/search-bar';
 import VideoList from './components/video-list';
+import VideoDetail from './components/video-detail';
 
 const YOUTUBE_KEY = Secrets.youtube_key;
 
@@ -22,6 +23,7 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
+        <VideoDetail video={ this.state.videos[0] } />
         <VideoList videos={ this.state.videos } />
       </div>
     );
