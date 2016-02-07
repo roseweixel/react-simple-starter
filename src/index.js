@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Secrets from './secrets';
+import YouTubeSearch from 'youtube-api-search';
 import SearchBar from './components/search-bar';
+import VideoList from './components/video-list';
 
 const YOUTUBE_KEY = Secrets.youtube_key;
 
-// Create a new component that produces some HTML
-// this is a class, not an instance
-const App = () => {
-  return (
-    <div>
-      <SearchBar />
-    </div>
-  );
+class App extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = { videos: [] };
+
+    YouTubeSearch({key: YOUTUBE_KEY, term: 'Bernie Sanders'}, (videos) => {
+      this.setState({ videos });
+    });
+  }
+
+  render () {
+    return (
+      <div>
+        <SearchBar />
+        <VideoList videos={ this.state.videos } />
+      </div>
+    );
+  }
 }
 
-// Take this component's generated HTML and put it in the DOM
-// We need to instantiate our component before we render it
 ReactDOM.render(<App />, document.querySelector('.container'));
